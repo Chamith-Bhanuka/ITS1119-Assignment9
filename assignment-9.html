@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Assignment-9</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background-color: black;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .scanner {
+      display: flex;
+      gap: 10px;
+    }
+
+    .light {
+      width: 40px;
+      height: 40px;
+      background-color: #220000;
+      border-radius: 5px;
+      box-shadow: 0 0 10px #000;
+      transition: background-color 0.2s, box-shadow 0.2s;
+    }
+
+    .active {
+      background-color: red;
+      box-shadow: 0 0 20px red;
+    }
+
+    .tail {
+      background-color: #550000;
+      box-shadow: 0 0 10px #550000;
+      animation: blink 0.2s ease-in-out;
+    }
+
+    @keyframes blink {
+      0%   { opacity: 1; }
+      100% { opacity: 0.4; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="scanner">
+  <div class="light"></div>
+  <div class="light"></div>
+  <div class="light"></div>
+  <div class="light"></div>
+  <div class="light"></div>
+  <div class="light"></div>
+  <div class="light"></div>
+</div>
+
+<audio autoplay loop>
+  <source src="assets/audio/kit.mp3" type="audio/mp3">
+</audio>
+
+<script src="assets/lib/jquery-3.7.1.min.js"></script>
+<script>
+  $(document).ready(function() {
+    let lights = $(".light");
+    let current = 0;
+    let direction = 1;
+
+    function updateLights() {
+      lights.removeClass("active tail");
+
+      lights.eq(current).addClass("active");
+
+      let tailIndex = current - direction;
+      if (tailIndex >= 0 && tailIndex < lights.length) {
+        lights.eq(tailIndex).addClass("tail");
+      }
+
+      current += direction;
+
+      if (current === lights.length - 1 || current === 0) {
+        direction *= -1;
+      }
+    }
+
+    setInterval(updateLights, 100);
+  });
+
+</script>
+
+</body>
+</html>
